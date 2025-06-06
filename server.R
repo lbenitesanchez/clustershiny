@@ -19,9 +19,6 @@ server <- function(input, output, session) {
     }
 
     df
-
-   
-
   })
   
   # Value boxes
