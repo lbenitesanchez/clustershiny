@@ -82,28 +82,24 @@ server <- function(input, output, session) {
              col = colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))(200))
   })
   
-  # Distribución de variables
+  # Distribución por uso de app con boxplots
   output$distPlot <- renderPlotly({
-    if(input$varExplore == "uso_app") {
-      # Para variable binaria, usar gráfico de barras
-      p <- ggplot(data(), aes(x = factor(uso_app))) +
-        geom_bar(fill = "#605ca8", alpha = 0.7) +
-        scale_x_discrete(labels = c("0" = "No usa app", "1" = "Usa app")) +
-        theme_minimal() +
-        labs(title = "Distribución de Uso de App",
-             x = "Uso de App", y = "Frecuencia") +
-        theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
-    } else {
-      # Para variables continuas, usar histograma con densidad
-      p <- ggplot(data(), aes_string(x = input$varExplore)) +
-        geom_histogram(aes(y = ..density..), bins = 20, fill = "#605ca8", alpha = 0.7) +
-        geom_density(color = "#ff6b6b", size = 1.2) +
-        theme_minimal() +
-        labs(title = paste("Distribución de", input$varExplore),
-             x = input$varExplore, y = "Densidad") +
-        theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
-    }
-    
+    df_long <- data() %>%
+      select(uso_app, freq_visitas, ticket_promedio, diversidad_categorias,
+             distancia_tienda, edad) %>%
+      mutate(uso_app = factor(uso_app, labels = c("No usa app", "Usa app"))) %>%
+      pivot_longer(cols = -uso_app, names_to = "variable", values_to = "valor")
+
+    p <- ggplot(df_long, aes(x = uso_app, y = valor, fill = uso_app)) +
+      geom_boxplot(alpha = 0.7, outlier.alpha = 0.25) +
+      facet_wrap(~ variable, scales = "free_y", ncol = 3) +
+      scale_fill_manual(values = c("#E41A1C", "#4DAF4A")) +
+      theme_minimal() +
+      labs(title = "Variables Cuantitativas por Uso de App",
+           x = "Uso de App", y = NULL) +
+      theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+            legend.position = "none")
+
     ggplotly(p)
   })
   
