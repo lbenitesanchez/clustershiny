@@ -4,7 +4,20 @@ server <- function(input, output, session) {
   # Cargar datos
   data <- reactive({
     # Cargar base de datos ubicada en la carpeta "data"
-    read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
+    df <- read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
+
+    # Unificar nombre de columna identificadora
+    if (!"id_cliente" %in% names(df)) {
+      id_col <- grep("cliente", names(df), ignore.case = TRUE, value = TRUE)
+      if (length(id_col) == 0) {
+        id_col <- names(df)[1]
+      } else {
+        id_col <- id_col[1]
+      }
+      names(df)[names(df) == id_col] <- "id_cliente"
+    }
+
+    df
   })
   
   # Value boxes
