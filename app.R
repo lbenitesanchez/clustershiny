@@ -2,7 +2,7 @@
 required_pkgs <- c(
   "shiny", "shinydashboard", "plotly", "DT", "dplyr", "ggplot2",
   "dendextend", "factoextra", "cluster", "corrplot", "RColorBrewer",
-  "fmsb", "scales", "tidyr"
+  "fmsb", "scales", "ggfun", "tidyr"
 )
 
 for (pkg in required_pkgs) {
