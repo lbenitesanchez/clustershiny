@@ -1,4 +1,4 @@
-id_cliente,freq_visitas,ticket_promedio,diversidad_categorías,uso_app,distancia_tienda,edad
+id_cliente,freq_visitas,ticket_promedio,diversidad_categorias,uso_app,distancia_tienda,edad
 C0001,4.364908483,89.91690986,72.89877439,1,3.077303123,34.48480476
 C0002,3.717279771,91.28855402,46.90175482,1,2.703131358,30.87562642
 C0003,2.136391577,43.54124372,33.76345189,0,3.81675776,49.41428417
