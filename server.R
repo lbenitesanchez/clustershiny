@@ -4,6 +4,7 @@ server <- function(input, output, session) {
   # Cargar datos
   data <- reactive({
     # Cargar base de datos ubicada en la carpeta "data"
+
     df <- read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
 
     # Unificar nombre de columna identificadora
@@ -18,6 +19,9 @@ server <- function(input, output, session) {
     }
 
     df
+
+   
+
   })
   
   # Value boxes
