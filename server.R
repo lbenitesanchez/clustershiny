@@ -3,7 +3,8 @@ server <- function(input, output, session) {
   
   # Cargar datos
   data <- reactive({
-    read.csv("NovaRetail.csv", stringsAsFactors = FALSE)
+    # Cargar base de datos ubicada en la carpeta "data"
+    read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
   })
   
   # Value boxes
