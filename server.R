@@ -491,11 +491,11 @@ server <- function(input, output, session) {
             ylab = "Ticket promedio",
             main = "Ticket Promedio")
     
-    boxplot(data()$diversidad_categorías ~ clusters, 
+    boxplot(data()$diversidad_categorias ~ clusters, 
             col = box_colors,
             xlab = "Cluster", 
-            ylab = "Diversidad categorías",
-            main = "Diversidad de Categorías")
+            ylab = "Diversidad categorias",
+            main = "Diversidad de categorias")
     
     boxplot(data()$distancia_tienda ~ clusters, 
             col = box_colors,
@@ -572,7 +572,7 @@ server <- function(input, output, session) {
         `Edad Promedio` = round(mean(edad), 1),
         `Freq. Visitas` = round(mean(freq_visitas), 2),
         `Ticket Promedio` = paste0("$", round(mean(ticket_promedio), 2)),
-        `Diversidad Categorías` = round(mean(diversidad_categorías), 1),
+        `Diversidad categorias` = round(mean(diversidad_categorias), 1),
         `% Usa App` = paste0(round(mean(uso_app) * 100, 1), "%"),
         `Distancia Tienda (km)` = round(mean(distancia_tienda), 2)
       ) %>%
@@ -587,7 +587,7 @@ server <- function(input, output, session) {
         `Edad Promedio` = round(mean(edad), 1),
         `Freq. Visitas` = round(mean(freq_visitas), 2),
         `Ticket Promedio` = paste0("$", round(mean(ticket_promedio), 2)),
-        `Diversidad Categorías` = round(mean(diversidad_categorías), 1),
+        `Diversidad categorias` = round(mean(diversidad_categorias), 1),
         `% Usa App` = paste0(round(mean(uso_app) * 100, 1), "%"),
         `Distancia Tienda (km)` = round(mean(distancia_tienda), 2)
       )
