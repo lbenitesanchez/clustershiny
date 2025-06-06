@@ -117,13 +117,10 @@ ui <- dashboardPage(
         ),
         fluidRow(
           box(
-            title = "Distribución de Variables",
+            title = "Distribución por Uso de App",
             status = "info",
             solidHeader = TRUE,
             width = 12,
-            selectInput("varExplore", "Selecciona una variable:",
-                        choices = c("freq_visitas", "ticket_promedio", "diversidad_categorias", 
-                                    "uso_app", "distancia_tienda", "edad")),
             plotlyOutput("distPlot", height = "400px")
           )
         )
