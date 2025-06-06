@@ -3,7 +3,21 @@ server <- function(input, output, session) {
   
   # Cargar datos
   data <- reactive({
-    read.csv("NovaRetail.csv", stringsAsFactors = FALSE)
+    # Cargar base de datos ubicada en la carpeta "data"
+    df <- read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
+
+    # Unificar nombre de columna identificadora
+    if (!"id_cliente" %in% names(df)) {
+      id_col <- grep("cliente", names(df), ignore.case = TRUE, value = TRUE)
+      if (length(id_col) == 0) {
+        id_col <- names(df)[1]
+      } else {
+        id_col <- id_col[1]
+      }
+      names(df)[names(df) == id_col] <- "id_cliente"
+    }
+
+    df
   })
   
   # Value boxes
@@ -176,40 +190,28 @@ server <- function(input, output, session) {
   
   output$elbowPlot <- renderPlot({
     req(kmeans_results())
-    
-    df_elbow <- data.frame(
-      k = kmeans_results()$k_range,
-      wss = kmeans_results()$wss
-    )
-    
-    ggplot(df_elbow, aes(x = k, y = wss)) +
-      geom_line(color = "#605ca8", size = 1.2) +
-      geom_point(color = "#605ca8", size = 3) +
-      scale_x_continuous(breaks = kmeans_results()$k_range) +
-      theme_minimal() +
-      labs(title = "Método del Codo",
-           x = "Número de clusters (k)",
-           y = "Suma de cuadrados dentro de clusters") +
-      theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
+
+    num_scaled <- kmeans_results()$data_scaled
+
+    fviz_nbclust(num_scaled,
+                 kmeans,
+                 method  = "wss",
+                 k.max   = 10,
+                 nstart  = 25) +
+      labs(title = "Método del Codo")
   })
-  
+
   output$silhouettePlot <- renderPlot({
     req(kmeans_results())
-    
-    df_sil <- data.frame(
-      k = kmeans_results()$k_range,
-      silhouette = kmeans_results()$avg_sil
-    )
-    
-    ggplot(df_sil, aes(x = k, y = silhouette)) +
-      geom_line(color = "#ff6b6b", size = 1.2) +
-      geom_point(color = "#ff6b6b", size = 3) +
-      scale_x_continuous(breaks = kmeans_results()$k_range) +
-      theme_minimal() +
-      labs(title = "Análisis Silhouette",
-           x = "Número de clusters (k)",
-           y = "Coeficiente Silhouette promedio") +
-      theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5))
+
+    num_scaled <- kmeans_results()$data_scaled
+
+    fviz_nbclust(num_scaled,
+                 kmeans,
+                 method  = "silhouette",
+                 k.max   = 10,
+                 nstart  = 25) +
+      labs(title = "Análisis Silhouette")
   })
   
   output$kmeansPlot <- renderPlotly({
