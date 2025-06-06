@@ -81,7 +81,7 @@ ui <- dashboardPage(
             tags$ul(
               tags$li(strong("freq_visitas:"), " Frecuencia de visitas del cliente"),
               tags$li(strong("ticket_promedio:"), " Valor promedio de compra por visita"),
-              tags$li(strong("diversidad_categorías:"), " Variedad de categorías de productos comprados"),
+              tags$li(strong("diversidad_categorias:"), " Variedad de categorias de productos comprados"),
               tags$li(strong("uso_app:"), " Si el cliente usa la aplicación móvil (0=No, 1=Sí)"),
               tags$li(strong("distancia_tienda:"), " Distancia del cliente a la tienda más cercana"),
               tags$li(strong("edad:"), " Edad del cliente")
@@ -122,7 +122,7 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 12,
             selectInput("varExplore", "Selecciona una variable:",
-                        choices = c("freq_visitas", "ticket_promedio", "diversidad_categorías", 
+                        choices = c("freq_visitas", "ticket_promedio", "diversidad_categorias", 
                                     "uso_app", "distancia_tienda", "edad")),
             plotlyOutput("distPlot", height = "400px")
           )
@@ -139,9 +139,9 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 4,
             checkboxGroupInput("varsHclust", "Variables a incluir:",
-                               choices = c("freq_visitas", "ticket_promedio", "diversidad_categorías", 
+                               choices = c("freq_visitas", "ticket_promedio", "diversidad_categorias", 
                                            "uso_app", "distancia_tienda", "edad"),
-                               selected = c("freq_visitas", "ticket_promedio", "diversidad_categorías", "edad")),
+                               selected = c("freq_visitas", "ticket_promedio", "diversidad_categorias", "edad")),
             selectInput("distMethod", "Método de distancia:",
                         choices = c("euclidean", "manhattan", "maximum", "canberra", "minkowski"),
                         selected = "euclidean"),
@@ -180,9 +180,9 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 4,
             checkboxGroupInput("varsKmeans", "Variables a incluir:",
-                               choices = c("freq_visitas", "ticket_promedio", "diversidad_categorías", 
+                               choices = c("freq_visitas", "ticket_promedio", "diversidad_categorias", 
                                            "uso_app", "distancia_tienda", "edad"),
-                               selected = c("freq_visitas", "ticket_promedio", "diversidad_categorías", "edad")),
+                               selected = c("freq_visitas", "ticket_promedio", "diversidad_categorias", "edad")),
             sliderInput("maxK", "Rango de k para evaluación:", min = 2, max = 10, value = c(2, 8)),
             numericInput("nClustersKM", "Número de clusters seleccionado:", value = 3, min = 2, max = 10),
             numericInput("nstart", "Número de inicializaciones:", value = 25, min = 1, max = 50),
@@ -271,7 +271,7 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             width = 6,
             selectInput("varBoxplot", "Selecciona una variable:",
-                        choices = c("freq_visitas", "ticket_promedio", "diversidad_categorías", 
+                        choices = c("freq_visitas", "ticket_promedio", "diversidad_categorias", 
                                     "distancia_tienda", "edad"),
                         selected = "ticket_promedio"),
             plotlyOutput("boxplotProfile", height = "350px")
