@@ -5,6 +5,11 @@ server <- function(input, output, session) {
   data <- reactive({
     # Cargar base de datos ubicada en la carpeta "data"
 
+    # Asegurar nombre sin tilde en la variable de diversidad de categorías
+    if ("diversidad_categorías" %in% names(df)) {
+      names(df)[names(df) == "diversidad_categorías"] <- "diversidad_categorias"
+    }
+
     df <- read.csv(file.path("data", "NovaRetail.csv"), stringsAsFactors = FALSE)
 
     # Unificar nombre de columna identificadora
@@ -465,10 +470,10 @@ server <- function(input, output, session) {
     req(input$methodProfile)
     
     if(input$methodProfile == "hclust" && !is.null(hclust_results())) {
-      clusters <- hclust_results()$clusters
-    } else if(input$methodProfile == "kmeans" && !is.null(kmeans_results())) {
-      clusters <- kmeans_results()$km$cluster
-    } else {
+    boxplot(data()$diversidad_categorias ~ clusters,
+            xlab = "Cluster",
+            ylab = "Diversidad categorias",
+            main = "Diversidad de Categorias")
       return(NULL)
     }
     
@@ -546,8 +551,8 @@ server <- function(input, output, session) {
            x = "Cluster",
            y = NULL) +
       theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-            strip.text = element_text(size = 11, face = "bold"),
-            legend.position = "none")
+        `Diversidad Categorías` = round(mean(diversidad_categorias), 1),
+        `Diversidad Categorías` = round(mean(diversidad_categorias), 1),
     
     ggplotly(p)
   })
